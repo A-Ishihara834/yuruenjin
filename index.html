@@ -28,10 +28,10 @@
     @media (max-width:640px){ .row { grid-auto-flow: row; } }
 
     .item { text-align: center; text-decoration: none; color: inherit; }
-    .item svg { display: block; margin-inline: auto; }
+    .item img { display: block; margin-inline: auto; }
     .label, figcaption { margin-top: .5rem; color: #666; }
 
-    a.link:hover svg { transform: translateY(-2px); transition: transform .12s ease; }
+    a.link:hover img { transform: translateY(-2px); transition: transform .12s ease; }
 
     .back {
       text-decoration: none; color: inherit;
@@ -45,57 +45,37 @@
     footer { position: fixed; bottom: .5rem; right: .75rem; font-size: 12px; color: #999; }
 
     /* 🍌 ぷるぷるアニメーション */
-    .banana-top {
-      display: block;
-      text-align: center;
-      margin-top: 2rem;
-    }
+    .banana-top { display: block; text-align: center; margin-top: 2rem; }
     .banana-top img {
       animation: ring 1s infinite ease-in-out;
-      transform-origin: 50% 0; /* 上端を支点に振れるように */
+      transform-origin: 50% 0;
     }
     @keyframes ring {
-      0%   { transform: rotate(0deg); }
-      10%  { transform: rotate(10deg); }
-      20%  { transform: rotate(-8deg); }
-      30%  { transform: rotate(6deg); }
-      40%  { transform: rotate(-4deg); }
-      50%  { transform: rotate(2deg); }
-      60%  { transform: rotate(-1deg); }
-      70%,100% { transform: rotate(0deg); }
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(2deg); }
+      50% { transform: rotate(0deg); }
+      75% { transform: rotate(-2deg); }
+      100% { transform: rotate(0deg); }
     }
   </style>
 </head>
 <body>
 
-  <!-- SNS画面 -->
-  <main id="sns" class="screen" aria-labelledby="sns-title">
-    <h1 id="sns-title">ゆる縁JIN</h1>
-    <p>ここにコミュニティの入口・案内・ルール・リンクを配置できます。</p>
-    <p><a class="back" href="#home">← ばななポータルにもどる</a></p>
-  </main>
+<main id="home" class="screen">
+  <div class="row">
+    <a class="item link" href="https://a-ishihara834.github.io/yuruenjin-sns/" target="_blank">
+      <img src="images/yuruen_tea.png" alt="ゆる縁とお茶" width="220" height="200">
+      <span class="label">👁️</span>
+    </a>
+  </div>
 
-  <!-- ホーム画面 -->
-  <main id="home" class="screen" aria-labelledby="home-title">
-    <h1 id="home-title" class="vh">ばななポータル</h1>
+  <!-- 下部ぷるぷるバナナ -->
+  <div class="banana-top">
+    <img src="images/gorugo-banana.png" alt="ぷるぷるゴルゴバナナ" width="120" height="120">
+  </div>
+</main>
 
-    <div class="row">
-      
-      <!-- バナナ（リンク） -->
-        <a class="item link" href="https://a-ishihara834.github.io/yuruenjin-sns/" target="_blank">
-　　　　  <img src="images/yuruen_tea.png" alt="ゆる縁とお茶" width="220" height="200">
-　　　  <span class="label">👁️</span>
-</a>
+<footer>build: banana-0005</footer>
 
-      </a>
-    </div>
-
-    <!-- ぷるぷるさるバナナ -->
-    <div class="banana-top">
-      <img src="images/saru-banana.png" alt="シュールなさるバナナ" width="60">
-    </div>
-  </main>
-
-  <footer>build: banana-0004</footer>
 </body>
 </html>
