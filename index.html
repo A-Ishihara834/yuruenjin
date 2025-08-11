@@ -3,109 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <title>旅するゴルゴバナナ</title>
-<!-- 面白フォント（Kaisei Decol） -->
 <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap" rel="stylesheet">
 <style>
-  body {
-    margin: 0;
-    overflow: hidden; /* スクロールバー非表示 */
-    background: #ffffff;
-    font-family: 'Kaisei Decol', serif;
-  }
-  /* 右上の次ページボタン */
-  #nextButton {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    background: rgba(255, 255, 0, 0.9);
-    color: #000;
-    padding: 8px 12px;
-    border-radius: 10px;
-    font-weight: bold;
-    text-decoration: none;
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.25);
-    z-index: 10000;
-  }
-  #nextButton:hover {
-    filter: brightness(1.05);
-  }
-  /* 跳ね＆揺れバナナ（cute-banana） */
-  #banana {
-    position: absolute;
-    height: 20%;
-    width: auto;
-    transform-origin: center center;
-    z-index: 10;
-  }
-  /* 画面下ゆらゆらサルバナナ */
-  #fixedBanana {
-    position: fixed;
-    bottom: 12px;
-    left: 50%;
-    height: 120px;
-    width: auto;
-    transform-origin: bottom center;
-    will-change: transform;
-    z-index: 5;
-  }
-  /* 右下ゆらゆらネコ */
-  #sleepingCat {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    height: 120px;
-    width: auto;
-    transform-origin: bottom center;
-    z-index: 6;
-  }
+  body { margin: 0; overflow: hidden; background: #ffffff; font-family: 'Kaisei Decol', serif; }
+  #nextButton { position: fixed; top: 10px; right: 10px; background: rgba(255,255,0,0.9); color: #000; padding: 8px 12px; border-radius: 10px; font-weight: bold; text-decoration: none; box-shadow: 2px 2px 6px rgba(0,0,0,0.25); z-index: 10000; }
+  #nextButton:hover { filter: brightness(1.05); }
+  #banana { position: absolute; height: 20%; width: auto; transform-origin: center center; z-index: 10; }
+  #fixedBanana { position: fixed; bottom: 12px; left: 50%; height: 120px; width: auto; transform-origin: bottom center; will-change: transform; z-index: 5; }
+  #sleepingCat { position: fixed; bottom: 10px; right: 10px; height: 120px; width: auto; transform-origin: bottom center; z-index: 6; }
 </style>
 </head>
 <body>
-  <!-- 右上ナビ -->
-  <a id="nextButton" href="next.html" aria-label="次のページへ">▶ 次のページへ</a>
-
-  <!-- 跳ね＆揺れゴルゴバナナ -->
-  <img id="banana" src="images/cute-banana.png" alt="ゴルゴバナナ">
-
-  <!-- 画面下固定ゆらゆらサルバナナ -->
-  <img id="fixedBanana" src="images/saru-banana.png" alt="サルバナナ固定">
-
-  <!-- 右下ゆらゆら＋まばたきネコ -->
-  <img id="sleepingCat" src="images/kitten-sleeping.png" alt="寝ているネコ">
-
+<a id="nextButton" href="next.html">▶ 次のページへ</a>
+<img id="banana" src="images/cute-banana.png" alt="ゴルゴバナナ">
+<img id="fixedBanana" src="images/saru-banana.png" alt="サルバナナ固定">
+<img id="sleepingCat" src="images/kitten-sleeping.png" alt="寝ているネコ">
 <script>
-  /* 跳ねる＆揺れるゴルゴバナナ */
+  // ゴルゴバナナ動き
   const banana = document.getElementById('banana');
-  let x = 100, y = 100;
-  let dx = (Math.random() * 4) + 2;
-  let dy = (Math.random() * 4) + 2;
-  let angle = 0, angleDirection = 1;
-  function moveBanana() {
-    const rect = banana.getBoundingClientRect();
-    x += dx;
-    y += dy;
-    if (x <= 0 || x + rect.width >= window.innerWidth) {
-      dx = -dx;
-      dy += (Math.random() - 0.5) * 2;
-    }
-    if (y <= 0 || y + rect.height >= window.innerHeight) {
-      dy = -dy;
-      dx += (Math.random() - 0.5) * 2;
-    }
-    banana.style.left = x + 'px';
-    banana.style.top = y + 'px';
-    requestAnimationFrame(moveBanana);
-  }
-  function swayBanana() {
-    angle += angleDirection * 0.5;
-    if (angle > 5 || angle < -5) angleDirection *= -1;
-    banana.style.transform = `rotate(${angle}deg)`;
-    requestAnimationFrame(swayBanana);
-  }
-
-  /* ゆらゆらサルバナナ */
-  function swayFixedBanana(){
-    const fixed = document.getElementById('fixedBanana');
-    let fAngle = 0, fDir = 1;
-    function frame(){
-      fAngle += fDir * 0.4;
+  let x=100,y=100,dx=Math.random()*4+2,dy=Math.random()*4+2,angle=0,angleDirection=1;
+  function moveBanana(){const r=banana.getBoundingClientRect();x+=dx;y+=dy;
+    if(x<=0||x+r.width>=innerWidth){dx=-dx;dy+=(Math.random()-.5)*2;}
+    if(y<=0||y+r.height>=innerHeight){dy=-dy;dx+=(Math.random()-.5)*2;}
+    banana.style.left=x+'px';banana.style.top=y+'px';requestAnimationFrame(moveBanana);}
+  function swayBanana(){angle+=angleDirection*.5;if(angle>5||angle<-5)angleDirection*=-1;
+    banana.style.transform=`rotate(${angle}deg)`;requestAnimationFrame(swayBanana);}
+  // サルバナナゆらゆら
+  function swayFixedBanana(){const f=document.getElementById('fixedBanana');let a=0,d=1;
+    function frame(){a+=d*.4;if(a>6||a<-6)d*=-1;f.style.transform=`translateX(-50%) rotate(${a}deg)`;requestAnimationFrame(frame);}frame();}
+  // ネコゆらゆら＋まばたき
+  function animateCat(){const c=document.getElementById('sleepingCat');let a=0,d=1,t=0,b=false;
+    function frame(){a+=d*.3;if(a>4||a<-4)d*=-1;c.style.transform=`rotate(${a}deg)`;
+      t++;if(!b&&t>240){b=true;c.style.filter='brightness(70%)';setTimeout(()=>{c.style.filter='brightness(100%)';b=false;t=0;},150);}
+      requestAnimationFrame(frame);}frame();}
+  moveBanana();swayBanana();swayFixedBanana();animateCat();
+</script>
+</body>
+</html>
