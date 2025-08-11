@@ -2,122 +2,75 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>ゆる縁JIN ポータル</title>
+<title>旅するゴルゴバナナ</title>
+
+<!-- 面白フォント（Kaisei Decol） -->
+<link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap" rel="stylesheet">
+
 <style>
   body {
     margin: 0;
-    overflow: hidden;
-    background: #ffffff;
-    font-family: sans-serif;
-    text-align: center;
-  }
-  header, main, footer {
-    position: relative;
-    z-index: 1;
-    padding: 10px;
+    overflow: hidden;       /* スクロールバー非表示 */
+    background: #ffffff;    /* 背景まっしろ */
+    font-family: 'Kaisei Decol', serif;
   }
   #banana {
     position: absolute;
-    height: 20%;
+    height: 20%;  /* 縦サイズを画面の20%に縮小 */
     width: auto;
-    z-index: 999;
-  }
-  .latest-posts {
-    max-width: 400px;
-    margin: 10px auto;
-    padding: 8px;
-    background: #fafafa;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    text-align: left;
-  }
-  .post {
-    margin-bottom: 5px;
-    padding: 5px;
-    background: #fff;
-    border: 1px solid #eee;
-    border-radius: 4px;
+    transform-origin: center center; /* 揺れ基準は中心 */
   }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>ゆる縁JIN ポータル</h1>
-</header>
-
-<main>
-  <p>ようこそ、やさしいSNSポータルへ🍀</p>
-  <div class="latest-posts" id="latestPosts">
-    <p>最新投稿はまだありません</p>
-  </div>
-  <p><a href="next.html">▶ SNSへ</a></p>
-</main>
-
-<footer>
-  <p>&copy; 2025 ゆる縁JIN</p>
-</footer>
-
-<img id="banana" src="images/cute-banana.png" alt="かわいいバナナ">
+<!-- ゴルゴ揺れ付きバナナ -->
+<img id="banana" src="images/cute-banana.png" alt="ゴルゴバナナ">
 
 <script>
-  const banana = document.getElementById('banana');
-  // 位置と速度をlocalStorageから読み込み
-  let x = parseFloat(localStorage.getItem('banana_x')) || 100;
-  let y = parseFloat(localStorage.getItem('banana_y')) || 100;
-  let dx = parseFloat(localStorage.getItem('banana_dx')) || (Math.random() * 4) + 2;
-  let dy = parseFloat(localStorage.getItem('banana_dy')) || (Math.random() * 4) + 2;
+const banana = document.getElementById('banana');
 
-  function moveBanana() {
-    const rect = banana.getBoundingClientRect();
-    x += dx; y += dy;
+// 移動用変数
+let x = 100;
+let y = 100;
+let dx = (Math.random() * 4) + 2;
+let dy = (Math.random() * 4) + 2;
 
-    if (x <= 0 || x + rect.width >= window.innerWidth) {
-      dx = -dx;
-      dy += (Math.random() - 0.5) * 2;
-    }
-    if (y <= 0 || y + rect.height >= window.innerHeight) {
-      dy = -dy;
-      dx += (Math.random() - 0.5) * 2;
-    }
+// 揺れ用変数
+let angle = 0;
+let angleDirection = 1;
 
-    banana.style.left = x + 'px';
-    banana.style.top = y + 'px';
+function moveBanana() {
+  const rect = banana.getBoundingClientRect();
+  x += dx;
+  y += dy;
 
-    // 現在の状態を保存
-    localStorage.setItem('banana_x', x);
-    localStorage.setItem('banana_y', y);
-    localStorage.setItem('banana_dx', dx);
-    localStorage.setItem('banana_dy', dy);
-
-    requestAnimationFrame(moveBanana);
+  // 壁で反射
+  if (x <= 0 || x + rect.width >= window.innerWidth) {
+    dx = -dx;
+    dy += (Math.random() - 0.5) * 2;
   }
-  moveBanana();
-
-  // 最新3件投稿
-  function loadLatestPosts() {
-    const saved = localStorage.getItem('yuruenjin_posts');
-    const container = document.getElementById('latestPosts');
-    container.innerHTML = '';
-
-    if (saved) {
-      const posts = JSON.parse(saved);
-      if (posts.length > 0) {
-        const latest = posts.slice(-3).reverse();
-        latest.forEach(text => {
-          const postDiv = document.createElement('div');
-          postDiv.className = 'post';
-          postDiv.textContent = text;
-          container.appendChild(postDiv);
-        });
-      } else {
-        container.innerHTML = '<p>最新投稿はまだありません</p>';
-      }
-    } else {
-      container.innerHTML = '<p>最新投稿はまだありません</p>';
-    }
+  if (y <= 0 || y + rect.height >= window.innerHeight) {
+    dy = -dy;
+    dx += (Math.random() - 0.5) * 2;
   }
-  loadLatestPosts();
+
+  banana.style.left = x + 'px';
+  banana.style.top = y + 'px';
+
+  requestAnimationFrame(moveBanana);
+}
+
+function swayBanana() {
+  angle += angleDirection * 0.5; // 揺れ速度
+  if (angle > 5 || angle < -5) angleDirection *= -1; // 振り幅
+  banana.style.transform = `rotate(${angle}deg)`;
+  requestAnimationFrame(swayBanana);
+}
+
+// 両方スタート
+moveBanana();
+swayBanana();
 </script>
 
 </body>
