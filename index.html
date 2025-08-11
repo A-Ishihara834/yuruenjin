@@ -1,96 +1,61 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>ばななポータル</title>
-  <style>
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      background: #fff;
-      color: #111;
-      font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
-    }
-    .screen {
-      min-height: 100vh;
-      display: none;
-      place-items: center;
-      gap: 2rem;
-      padding: 2rem;
-    }
-    #home { display: grid; }
-    #sns:target { display: grid; }
-    #sns:target ~ #home { display: none; }
-    .row {
-      display: grid;
-      gap: 2rem;
-      grid-auto-flow: column;
-      align-items: center;
-    }
-    @media (max-width: 640px) {
-      .row { grid-auto-flow: row; }
-    }
-    .item {
-      text-align: center;
-      text-decoration: none;
-      color: inherit;
-    }
-    .item img { display: block; margin-inline: auto; }
-    .label, figcaption {
-      margin-top: .5rem;
-      color: #666;
-    }
-    a.link:hover img {
-      transform: translateY(-2px);
-      transition: transform .12s ease;
-    }
-    footer {
-      position: fixed;
-      bottom: .5rem;
-      right: .75rem;
-      font-size: 12px;
-      color: #999;
-    }
-    /* 🍌ぷるぷるアニメーション */
-    .banana-top { display: block; text-align: center; margin-top: 2rem; }
-    .banana-top img {
-      animation: ring 1s infinite ease-in-out;
-      transform-origin: 50% 0;
-    }
-    @keyframes ring {
-      0% { transform: rotate(0deg); }
-      25% { transform: rotate(2deg); }
-      50% { transform: rotate(0deg); }
-      75% { transform: rotate(-2deg); }
-      100% { transform: rotate(0deg); }
-    }
-    img.icon {
-      vertical-align: middle;
-      width: 20px;
-      height: 20px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>バナナ跳ね返りデモ</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden; /* スクロールバー非表示 */
+    background: #ffffff; /* 背景まっしろ */
+  }
+  #banana {
+    position: absolute;
+    height: 20%;  /* 縦サイズを1/5に縮小 */
+    width: auto;  /* アスペクト比維持 */
+  }
+</style>
 </head>
 <body>
-  <main id="home" class="screen">
-    <div class="row">
-      <a class="item link" href="https://a-ishihara834.github.io/yuruenjin-sns/" target="_blank">
-        <img src="images/yuruen-tea.png?v=0006" alt="ゆる縁とお茶" width="220" height="200">
-        <span class="label">
-          <img src="images/kitten-sleeping.png?v=0010"
-               alt="丸くなって眠る子猫"
-               class="icon">
-        </span>
-      </a>
-    </div>
 
-    <!-- 下部ぷるぷるサルバナナ -->
-    <div class="banana-top">
-      <img src="images/saru-banana.png?v=0006" alt="ぷるぷるサルバナナ" width="120" height="120">
-    </div>
-  </main>
+<!-- かわいい手なしバナナ -->
+<img id="banana" src="images/cute-banana.png" alt="かわいいバナナ">
 
-  <footer>build: banana-0010</footer>
+<script>
+  const banana = document.getElementById('banana');
+  let x = 100;
+  let y = 100;
+  let dx = (Math.random() * 4) + 2; // 横方向スピード
+  let dy = (Math.random() * 4) + 2; // 縦方向スピード
+
+  function moveBanana() {
+    const rect = banana.getBoundingClientRect();
+
+    // 座標更新
+    x += dx;
+    y += dy;
+
+    // 左右の壁で反射
+    if (x <= 0 || x + rect.width >= window.innerWidth) {
+      dx = -dx;
+      dy += (Math.random() - 0.5) * 2; // 少しランダム性
+    }
+
+    // 上下の壁で反射
+    if (y <= 0 || y + rect.height >= window.innerHeight) {
+      dy = -dy;
+      dx += (Math.random() - 0.5) * 2;
+    }
+
+    // 座標反映
+    banana.style.left = x + 'px';
+    banana.style.top = y + 'px';
+
+    requestAnimationFrame(moveBanana);
+  }
+
+  moveBanana();
+</script>
+
 </body>
 </html>
