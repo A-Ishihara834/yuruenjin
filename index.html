@@ -1,8 +1,7 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
   <title>ばななポータル</title>
   <style>
     * { box-sizing: border-box; }
@@ -23,19 +22,37 @@
     #home { display: grid; }
     #sns:target { display: grid; }
     #sns:target ~ #home { display: none; }
-
-    .row { display: grid; gap: 2rem; grid-auto-flow: column; align-items: center; }
-    @media (max-width:640px){ .row { grid-auto-flow: row; } }
-
-    .item { text-align: center; text-decoration: none; color: inherit; }
+    .row {
+      display: grid;
+      gap: 2rem;
+      grid-auto-flow: column;
+      align-items: center;
+    }
+    @media (max-width: 640px) {
+      .row { grid-auto-flow: row; }
+    }
+    .item {
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+    }
     .item img { display: block; margin-inline: auto; }
-    .label, figcaption { margin-top: .5rem; color: #666; }
-
-    a.link:hover img { transform: translateY(-2px); transition: transform .12s ease; }
-
-    footer { position: fixed; bottom: .5rem; right: .75rem; font-size: 12px; color: #999; }
-
-    /* 🍌 ぷるぷるアニメーション */
+    .label, figcaption {
+      margin-top: .5rem;
+      color: #666;
+    }
+    a.link:hover img {
+      transform: translateY(-2px);
+      transition: transform .12s ease;
+    }
+    footer {
+      position: fixed;
+      bottom: .5rem;
+      right: .75rem;
+      font-size: 12px;
+      color: #999;
+    }
+    /* 🍌ぷるぷるアニメーション */
     .banana-top { display: block; text-align: center; margin-top: 2rem; }
     .banana-top img {
       animation: ring 1s infinite ease-in-out;
@@ -48,25 +65,32 @@
       75% { transform: rotate(-2deg); }
       100% { transform: rotate(0deg); }
     }
+    img.icon {
+      vertical-align: middle;
+      width: 20px;
+      height: 20px;
+    }
   </style>
 </head>
 <body>
+  <main id="home" class="screen">
+    <div class="row">
+      <a class="item link" href="https://a-ishihara834.github.io/yuruenjin-sns/" target="_blank">
+        <img src="images/yuruen-tea.png?v=0006" alt="ゆる縁とお茶" width="220" height="200">
+        <span class="label">
+          <img src="images/kitten-sleeping.png?v=0010"
+               alt="丸くなって眠る子猫"
+               class="icon">
+        </span>
+      </a>
+    </div>
 
-<main id="home" class="screen">
-  <div class="row">
-    <a class="item link" href="https://a-ishihara834.github.io/yuruenjin-sns/" target="_blank">
-      <img src="images/yuruen-tea.png?v=0006" alt="ゆる縁とお茶" width="220" height="200">
-      <span class="label">👁️</span>
-    </a>
-  </div>
+    <!-- 下部ぷるぷるサルバナナ -->
+    <div class="banana-top">
+      <img src="images/saru-banana.png?v=0006" alt="ぷるぷるサルバナナ" width="120" height="120">
+    </div>
+  </main>
 
-  <!-- 下部ぷるぷるサルバナナ -->
-  <div class="banana-top">
-    <img src="images/saru-banana.png?v=0006" alt="ぷるぷるサルバナナ" width="120" height="120">
-  </div>
-</main>
-
-<footer>build: banana-0006</footer>
-
+  <footer>build: banana-0010</footer>
 </body>
 </html>
