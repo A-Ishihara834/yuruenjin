@@ -2,59 +2,122 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>バナナ跳ね返りデモ</title>
+<title>ゆる縁JIN ポータル</title>
 <style>
   body {
     margin: 0;
-    overflow: hidden; /* スクロールバー非表示 */
-    background: #ffffff; /* 背景まっしろ */
+    overflow: hidden;
+    background: #ffffff;
+    font-family: sans-serif;
+    text-align: center;
+  }
+  header, main, footer {
+    position: relative;
+    z-index: 1;
+    padding: 10px;
   }
   #banana {
     position: absolute;
-    height: 20%;  /* 縦サイズを1/5に縮小 */
-    width: auto;  /* アスペクト比維持 */
+    height: 20%;
+    width: auto;
+    z-index: 999;
+  }
+  .latest-posts {
+    max-width: 400px;
+    margin: 10px auto;
+    padding: 8px;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-align: left;
+  }
+  .post {
+    margin-bottom: 5px;
+    padding: 5px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 4px;
   }
 </style>
 </head>
 <body>
 
-<!-- かわいい手なしバナナ -->
+<header>
+  <h1>ゆる縁JIN ポータル</h1>
+</header>
+
+<main>
+  <p>ようこそ、やさしいSNSポータルへ🍀</p>
+  <div class="latest-posts" id="latestPosts">
+    <p>最新投稿はまだありません</p>
+  </div>
+  <p><a href="next.html">▶ SNSへ</a></p>
+</main>
+
+<footer>
+  <p>&copy; 2025 ゆる縁JIN</p>
+</footer>
+
 <img id="banana" src="images/cute-banana.png" alt="かわいいバナナ">
 
 <script>
   const banana = document.getElementById('banana');
-  let x = 100;
-  let y = 100;
-  let dx = (Math.random() * 4) + 2; // 横方向スピード
-  let dy = (Math.random() * 4) + 2; // 縦方向スピード
+  // 位置と速度をlocalStorageから読み込み
+  let x = parseFloat(localStorage.getItem('banana_x')) || 100;
+  let y = parseFloat(localStorage.getItem('banana_y')) || 100;
+  let dx = parseFloat(localStorage.getItem('banana_dx')) || (Math.random() * 4) + 2;
+  let dy = parseFloat(localStorage.getItem('banana_dy')) || (Math.random() * 4) + 2;
 
   function moveBanana() {
     const rect = banana.getBoundingClientRect();
+    x += dx; y += dy;
 
-    // 座標更新
-    x += dx;
-    y += dy;
-
-    // 左右の壁で反射
     if (x <= 0 || x + rect.width >= window.innerWidth) {
       dx = -dx;
-      dy += (Math.random() - 0.5) * 2; // 少しランダム性
+      dy += (Math.random() - 0.5) * 2;
     }
-
-    // 上下の壁で反射
     if (y <= 0 || y + rect.height >= window.innerHeight) {
       dy = -dy;
       dx += (Math.random() - 0.5) * 2;
     }
 
-    // 座標反映
     banana.style.left = x + 'px';
     banana.style.top = y + 'px';
 
+    // 現在の状態を保存
+    localStorage.setItem('banana_x', x);
+    localStorage.setItem('banana_y', y);
+    localStorage.setItem('banana_dx', dx);
+    localStorage.setItem('banana_dy', dy);
+
     requestAnimationFrame(moveBanana);
   }
-
   moveBanana();
+
+  // 最新3件投稿
+  function loadLatestPosts() {
+    const saved = localStorage.getItem('yuruenjin_posts');
+    const container = document.getElementById('latestPosts');
+    container.innerHTML = '';
+
+    if (saved) {
+      const posts = JSON.parse(saved);
+      if (posts.length > 0) {
+        const latest = posts.slice(-3).reverse();
+        latest.forEach(text => {
+          const postDiv = document.createElement('div');
+          postDiv.className = 'post';
+          postDiv.textContent = text;
+          container.appendChild(postDiv);
+        });
+      } else {
+        container.innerHTML = '<p>最新投稿はまだありません</p>';
+      }
+    } else {
+      container.innerHTML = '<p>最新投稿はまだありません</p>';
+    }
+  }
+  loadLatestPosts();
 </script>
 
 </body>
