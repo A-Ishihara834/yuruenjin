@@ -3,18 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <title>旅するゴルゴバナナ</title>
-
 <!-- 面白フォント（Kaisei Decol） -->
 <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap" rel="stylesheet">
-
 <style>
   body {
     margin: 0;
-    overflow: hidden;       /* スクロールバー非表示 */
-    background: #ffffff;    /* 背景まっしろ */
+    overflow: hidden; /* スクロールバー非表示 */
+    background: #ffffff;
     font-family: 'Kaisei Decol', serif;
   }
-
   /* 右上の次ページボタン */
   #nextButton {
     position: fixed;
@@ -29,9 +26,10 @@
     box-shadow: 2px 2px 6px rgba(0,0,0,0.25);
     z-index: 10000;
   }
-  #nextButton:hover { filter: brightness(1.05); }
-
-  /* 動くバナナ */
+  #nextButton:hover {
+    filter: brightness(1.05);
+  }
+  /* 跳ね＆揺れバナナ（cute-banana） */
   #banana {
     position: absolute;
     height: 20%;
@@ -39,8 +37,7 @@
     transform-origin: center center;
     z-index: 10;
   }
-
-  /* 画面下ゆらゆらバナナ */
+  /* 画面下ゆらゆらサルバナナ */
   #fixedBanana {
     position: fixed;
     bottom: 12px;
@@ -49,70 +46,66 @@
     width: auto;
     transform-origin: bottom center;
     will-change: transform;
-    z-index: 1;
+    z-index: 5;
+  }
+  /* 右下ゆらゆらネコ */
+  #sleepingCat {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    height: 120px;
+    width: auto;
+    transform-origin: bottom center;
+    z-index: 6;
   }
 </style>
 </head>
 <body>
+  <!-- 右上ナビ -->
+  <a id="nextButton" href="next.html" aria-label="次のページへ">▶ 次のページへ</a>
 
-<!-- 右上ナビ -->
-<a id="nextButton" href="next.html" aria-label="次のページへ">▶ 次のページへ</a>
+  <!-- 跳ね＆揺れゴルゴバナナ -->
+  <img id="banana" src="images/cute-banana.png" alt="ゴルゴバナナ">
 
-<!-- 跳ね＆揺れバナナ -->
-<img id="banana" src="images/cute-banana.png" alt="ゴルゴバナナ">
+  <!-- 画面下固定ゆらゆらサルバナナ -->
+  <img id="fixedBanana" src="images/saru-banana.png" alt="サルバナナ固定">
 
-<!-- 画面下固定ゆらゆらバナナ -->
-<img id="fixedBanana" src="images/cute-banana.png" alt="ゴルゴバナナ固定">
+  <!-- 右下ゆらゆら＋まばたきネコ -->
+  <img id="sleepingCat" src="images/kitten-sleeping.png" alt="寝ているネコ">
 
 <script>
-/* 動くバナナ用 */
-const banana = document.getElementById('banana');
-let x = 100, y = 100;
-let dx = (Math.random() * 4) + 2;
-let dy = (Math.random() * 4) + 2;
-let angle = 0, angleDirection = 1;
-
-function moveBanana() {
-  const rect = banana.getBoundingClientRect();
-  x += dx; y += dy;
-
-  if (x <= 0 || x + rect.width >= window.innerWidth) {
-    dx = -dx; dy += (Math.random() - 0.5) * 2;
+  /* 跳ねる＆揺れるゴルゴバナナ */
+  const banana = document.getElementById('banana');
+  let x = 100, y = 100;
+  let dx = (Math.random() * 4) + 2;
+  let dy = (Math.random() * 4) + 2;
+  let angle = 0, angleDirection = 1;
+  function moveBanana() {
+    const rect = banana.getBoundingClientRect();
+    x += dx;
+    y += dy;
+    if (x <= 0 || x + rect.width >= window.innerWidth) {
+      dx = -dx;
+      dy += (Math.random() - 0.5) * 2;
+    }
+    if (y <= 0 || y + rect.height >= window.innerHeight) {
+      dy = -dy;
+      dx += (Math.random() - 0.5) * 2;
+    }
+    banana.style.left = x + 'px';
+    banana.style.top = y + 'px';
+    requestAnimationFrame(moveBanana);
   }
-  if (y <= 0 || y + rect.height >= window.innerHeight) {
-    dy = -dy; dx += (Math.random() - 0.5) * 2;
+  function swayBanana() {
+    angle += angleDirection * 0.5;
+    if (angle > 5 || angle < -5) angleDirection *= -1;
+    banana.style.transform = `rotate(${angle}deg)`;
+    requestAnimationFrame(swayBanana);
   }
 
-  banana.style.left = x + 'px';
-  banana.style.top = y + 'px';
-  requestAnimationFrame(moveBanana);
-}
-
-function swayBanana() {
-  angle += angleDirection * 0.5;
-  if (angle > 5 || angle < -5) angleDirection *= -1;
-  banana.style.transform = `rotate(${angle}deg)`;
-  requestAnimationFrame(swayBanana);
-}
-
-/* 画面下ゆらゆらバナナ用 */
-function swayFixedBanana(){
-  const fixed = document.getElementById('fixedBanana');
-  let fAngle = 0, fDir = 1;
-  function frame(){
-    fAngle += fDir * 0.4;
-    if (fAngle > 6 || fAngle < -6) fDir *= -1;
-    fixed.style.transform = `translateX(-50%) rotate(${fAngle}deg)`;
-    requestAnimationFrame(frame);
-  }
-  frame();
-}
-
-/* 起動 */
-moveBanana();
-swayBanana();
-swayFixedBanana();
-</script>
-
-</body>
-</html>
+  /* ゆらゆらサルバナナ */
+  function swayFixedBanana(){
+    const fixed = document.getElementById('fixedBanana');
+    let fAngle = 0, fDir = 1;
+    function frame(){
+      fAngle += fDir * 0.4;
