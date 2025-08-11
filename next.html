@@ -4,14 +4,12 @@
 <meta charset="UTF-8">
 <title>SNSページ</title>
 <style>
-  /* 背景画像パス修正（先頭の / を削除） */
   body {
     background: url("images/bg-top02.jpg") no-repeat center top / cover;
     font-family: sans-serif;
     color: #333;
     padding: 20px;
   }
-
   a {
     display: inline-block;
     margin-top: 20px;
@@ -21,14 +19,12 @@
     color: #333;
     border-radius: 4px;
   }
-
   .content {
     background: rgba(255,255,255,0.7);
     padding: 15px;
     border-radius: 6px;
     max-width: 600px;
   }
-
   /* AIゾーン用 */
   .ai-post-zone {
     background: rgba(255,255,255,0.85);
@@ -84,14 +80,17 @@ function aiReply() {
   let text = document.getElementById("userInput").value.trim();
   if (!text) return;
 
-  // 即席アレンジ候補
+  // 即席ランダムアレンジ候補
   const arranges = [
     `🌸 ${text} — 春色をひとさじ`,
     `💫 ${text} — 星くずをまぶして`,
     `🍃 ${text} — 風に乗せてそっと`,
     `📜 ${text} — 古書の香りを添えて`,
-    `🎨 ${text} — 水彩で描き直しました`
+    `🎨 ${text} — 水彩で描き直しました`,
+    `🔥 ${text} — 炎の情熱をひとかけら`,
+    `💎 ${text} — 宝石のきらめきをのせて`
   ];
+
   let fakeAI = arranges[Math.floor(Math.random() * arranges.length)];
 
   let output = document.getElementById("aiOutput");
