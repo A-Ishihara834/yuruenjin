@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ばななポータル</title>
   <style>
-    /* 単一ファイル完結・外部依存なし */
     * { box-sizing: border-box; }
     html, body { height: 100%; }
     body {
@@ -18,12 +17,9 @@
       min-height: 100vh;
       display: none;
       place-items: center;
-      align-content: center;
-      justify-items: center;
       gap: 2rem;
       padding: 2rem;
     }
-    /* 初期表示は #home、#sns がターゲットなら #sns を表示 */
     #home { display: grid; }
     #sns:target { display: grid; }
     #sns:target ~ #home { display: none; }
@@ -35,7 +31,6 @@
     .item svg { display: block; margin-inline: auto; }
     .label, figcaption { margin-top: .5rem; color: #666; }
 
-    a.link { cursor: pointer; }
     a.link:hover svg { transform: translateY(-2px); transition: transform .12s ease; }
 
     .back {
@@ -44,35 +39,81 @@
     }
     .back:hover { background: #f6f6f6; }
 
-    .vh { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+    .vh { position: absolute !important; width: 1px; height: 1px; margin: -1px;
           overflow: hidden; clip: rect(0,0,1px,1px); white-space: nowrap; border: 0; }
 
     footer { position: fixed; bottom: .5rem; right: .75rem; font-size: 12px; color: #999; }
 
-    /* バナナ画像の表示調整 */
+    /* 🍌 ぷるぷるアニメーション */
     .banana-top {
       display: block;
       text-align: center;
       margin-top: 2rem;
     }
+    .banana-top img {
+      animation: ring 1s infinite ease-in-out;
+      transform-origin: 50% 0; /* 上端を支点に振れるように */
+    }
+    @keyframes ring {
+      0%   { transform: rotate(0deg); }
+      10%  { transform: rotate(10deg); }
+      20%  { transform: rotate(-8deg); }
+      30%  { transform: rotate(6deg); }
+      40%  { transform: rotate(-4deg); }
+      50%  { transform: rotate(2deg); }
+      60%  { transform: rotate(-1deg); }
+      70%,100% { transform: rotate(0deg); }
+    }
   </style>
 </head>
 <body>
 
-  <!-- SNS画面（#sns に来たときだけ表示） -->
+  <!-- SNS画面 -->
   <main id="sns" class="screen" aria-labelledby="sns-title">
     <h1 id="sns-title">ゆる縁JIN</h1>
     <p>ここにコミュニティの入口・案内・ルール・リンクを配置できます。</p>
     <p><a class="back" href="#home">← ばななポータルにもどる</a></p>
   </main>
 
-  <!-- 初期表示のホーム画面 -->
+  <!-- ホーム画面 -->
   <main id="home" class="screen" aria-labelledby="home-title">
     <h1 id="home-title" class="vh">ばななポータル</h1>
 
     <div class="row">
-      <!-- サル（インラインSVG） -->
-      <figure class="item" aria-label="さる">
-        <svg role="img" aria-label="さる" width="200" height="200" viewBox="0 0 200 200">
+      <!-- サル -->
+      <figure class="item">
+        <svg width="200" height="200" viewBox="0 0 200 200">
           <circle cx="100" cy="100" r="70" fill="#7a4b2a"/>
           <circle cx="55" cy="95" r="22" fill="#7a4b2a"/>
+          <circle cx="145" cy="95" r="22" fill="#7a4b2a"/>
+          <circle cx="80" cy="95" r="12" fill="#e6b089"/>
+          <circle cx="120" cy="95" r="12" fill="#e6b089"/>
+          <ellipse cx="100" cy="125" rx="28" ry="22" fill="#e6b089"/>
+          <circle cx="88" cy="105" r="5" fill="#1b1b1b"/>
+          <circle cx="112" cy="105" r="5" fill="#1b1b1b"/>
+          <path d="M85 130 Q100 145 115 130" stroke="#1b1b1b" stroke-width="4" fill="none"/>
+        </svg>
+        <figcaption>さる</figcaption>
+      </figure>
+
+      <!-- バナナ（リンク） -->
+      <a class="item link" href="https://a-ishihara834.github.io/yuruenjin-sns/" target="_blank">
+        <svg width="220" height="200" viewBox="0 0 220 200">
+          <path d="M40,120 C60,160 120,180 170,150 C150,155 120,150 90,130 C70,120 55,110 40,120 Z"
+                fill="#ffd34d" stroke="#d4a300" stroke-width="4" />
+          <circle cx="168" cy="148" r="5" fill="#6b4c19"/>
+          <rect x="35" y="112" width="10" height="16" fill="#6b4c19" rx="2"/>
+        </svg>
+        <span class="label">ばなな</span>
+      </a>
+    </div>
+
+    <!-- ぷるぷるさるバナナ -->
+    <div class="banana-top">
+      <img src="images/saru-banana.png" alt="シュールなさるバナナ" width="60">
+    </div>
+  </main>
+
+  <footer>build: banana-0004</footer>
+</body>
+</html>
