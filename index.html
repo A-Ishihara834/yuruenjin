@@ -48,6 +48,13 @@
           overflow: hidden; clip: rect(0,0,1px,1px); white-space: nowrap; border: 0; }
 
     footer { position: fixed; bottom: .5rem; right: .75rem; font-size: 12px; color: #999; }
+
+    /* バナナ画像の表示調整 */
+    .banana-top {
+      display: block;
+      text-align: center;
+      margin-top: 2rem;
+    }
   </style>
 </head>
 <body>
@@ -62,42 +69,10 @@
   <!-- 初期表示のホーム画面 -->
   <main id="home" class="screen" aria-labelledby="home-title">
     <h1 id="home-title" class="vh">ばななポータル</h1>
-    <div class="row">
 
+    <div class="row">
       <!-- サル（インラインSVG） -->
       <figure class="item" aria-label="さる">
         <svg role="img" aria-label="さる" width="200" height="200" viewBox="0 0 200 200">
           <circle cx="100" cy="100" r="70" fill="#7a4b2a"/>
           <circle cx="55" cy="95" r="22" fill="#7a4b2a"/>
-          <circle cx="145" cy="95" r="22" fill="#7a4b2a"/>
-          <circle cx="80" cy="95" r="12" fill="#e6b089"/>
-          <circle cx="120" cy="95" r="12" fill="#e6b089"/>
-          <ellipse cx="100" cy="125" rx="28" ry="22" fill="#e6b089"/>
-          <circle cx="88" cy="105" r="5" fill="#1b1b1b"/>
-          <circle cx="112" cy="105" r="5" fill="#1b1b1b"/>
-          <path d="M85 130 Q100 145 115 130" stroke="#1b1b1b" stroke-width="4" fill="none"/>
-        </svg>
-        <figcaption>さる</figcaption>
-      </figure>
-
-      <!-- バナナ（クリックで #sns へ） -->
-      <a class="item link" href="https://a-ishihara834.github.io/yuruenjin-sns/" target="_blank" aria-label="ばなな（ゆる縁JINへ）" aria-label="ばなな（ゆる縁JINへ）">
-        <svg role="img" aria-label="ばなな" width="220" height="200" viewBox="0 0 220 200">
-          <path d="M40,120 C60,160 120,180 170,150 C150,155 120,150 90,130 C70,120 55,110 40,120 Z"
-                fill="#ffd34d" stroke="#d4a300" stroke-width="4" />
-          <circle cx="168" cy="148" r="5" fill="#6b4c19"/>
-          <rect x="35" y="112" width="10" height="16" fill="#6b4c19" rx="2"/>
-        </svg>
-        <span class="label">ばなな</span>
-      </a>
-
-    </div>
-  </main>
-　　　<div class="banana-top">
- 　　 <img src="images/saru-banana.png" alt="シュールなさるバナナ" width="60">
-　　　　</div>
-
-  <!-- 反映確認用のビルドID（見えていれば最新が出ている証拠） -->
-  <footer>build: banana-0003</footer>
-</body>
-</html>
