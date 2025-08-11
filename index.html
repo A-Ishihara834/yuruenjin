@@ -5,53 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ばななポータル</title>
   <style>
-    :root { color-scheme: light dark; --bg:#fff; --fg:#111; --muted:#666; }
+    /* 単一ファイル完結・外部依存なし */
     * { box-sizing: border-box; }
-    html, body { height:100%; }
+    html, body { height: 100%; }
     body {
-      margin:0; background:var(--bg); color:var(--fg);
-      font:16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+      margin: 0;
+      background: #fff;
+      color: #111;
+      font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
     }
     .screen {
-      min-height:100vh; display:none;
-      place-items:center; gap:2rem; padding:2rem;
-      align-content:center; justify-items:center;
+      min-height: 100vh;
+      display: none;
+      place-items: center;
+      align-content: center;
+      justify-items: center;
+      gap: 2rem;
+      padding: 2rem;
     }
-    #home { display:grid; }
-    #sns:target { display:grid; }
-    #sns:target ~ #home { display:none; }
+    /* 初期表示は #home、#sns がターゲットなら #sns を表示 */
+    #home { display: grid; }
+    #sns:target { display: grid; }
+    #sns:target ~ #home { display: none; }
 
-    .row { display:grid; gap:2rem; grid-auto-flow:column; align-items:center; }
-    @media (max-width:640px){ .row { grid-auto-flow:row; } }
+    .row { display: grid; gap: 2rem; grid-auto-flow: column; align-items: center; }
+    @media (max-width:640px){ .row { grid-auto-flow: row; } }
 
-    .item { text-align:center; text-decoration:none; color:inherit; }
-    .item svg { display:block; margin-inline:auto; }
-    .label, figcaption { margin-top:.5rem; color:var(--muted); }
+    .item { text-align: center; text-decoration: none; color: inherit; }
+    .item svg { display: block; margin-inline: auto; }
+    .label, figcaption { margin-top: .5rem; color: #666; }
 
-    a.link { cursor:pointer; }
+    a.link { cursor: pointer; }
     a.link:hover svg { transform: translateY(-2px); transition: transform .12s ease; }
 
-    .back { text-decoration:none; border:1px solid #ccc; padding:.5rem .8rem; border-radius:.5rem; color:inherit; }
-    .back:hover { background:#f6f6f6; }
-    .vh { position:absolute!important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,1px,1px); white-space:nowrap; border:0; }
+    .back {
+      text-decoration: none; color: inherit;
+      border: 1px solid #ddd; padding: .5rem .8rem; border-radius: .5rem;
+    }
+    .back:hover { background: #f6f6f6; }
+
+    .vh { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+          overflow: hidden; clip: rect(0,0,1px,1px); white-space: nowrap; border: 0; }
+
+    footer { position: fixed; bottom: .5rem; right: .75rem; font-size: 12px; color: #999; }
   </style>
 </head>
 <body>
 
   <!-- SNS画面（#sns に来たときだけ表示） -->
-  <main id="sns" class="screen">
-    <h1>ゆる縁JIN</h1>
+  <main id="sns" class="screen" aria-labelledby="sns-title">
+    <h1 id="sns-title">ゆる縁JIN</h1>
     <p>ここにコミュニティの入口・案内・ルール・リンクを配置できます。</p>
     <p><a class="back" href="#home">← ばななポータルにもどる</a></p>
   </main>
 
-  <!-- ホーム画面（初期表示） -->
-  <main id="home" class="screen">
-    <h1 class="vh">ばななポータル</h1>
+  <!-- 初期表示のホーム画面 -->
+  <main id="home" class="screen" aria-labelledby="home-title">
+    <h1 id="home-title" class="vh">ばななポータル</h1>
     <div class="row">
 
       <!-- サル（インラインSVG） -->
-      <figure class="item">
+      <figure class="item" aria-label="さる">
         <svg role="img" aria-label="さる" width="200" height="200" viewBox="0 0 200 200">
           <circle cx="100" cy="100" r="70" fill="#7a4b2a"/>
           <circle cx="55" cy="95" r="22" fill="#7a4b2a"/>
@@ -66,7 +80,7 @@
         <figcaption>さる</figcaption>
       </figure>
 
-      <!-- バナナ（クリックで #sns へ。別ファイル不要） -->
+      <!-- バナナ（クリックで #sns へ） -->
       <a class="item link" href="#sns" aria-label="ばなな（ゆる縁JINへ）">
         <svg role="img" aria-label="ばなな" width="220" height="200" viewBox="0 0 220 200">
           <path d="M40,120 C60,160 120,180 170,150 C150,155 120,150 90,130 C70,120 55,110 40,120 Z"
@@ -80,5 +94,7 @@
     </div>
   </main>
 
+  <!-- 反映確認用のビルドID（見えていれば最新が出ている証拠） -->
+  <footer>build: banana-0003</footer>
 </body>
 </html>
